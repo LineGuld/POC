@@ -1,4 +1,4 @@
-package dataAccess;
+package com.example.POC.dataAccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
