@@ -1,10 +1,10 @@
 package dataAccess;
 
 import Models.User;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -12,7 +12,6 @@ public class DAO extends DAOConnection implements DAOinterface
 {
 
   private static DAO dao;
-  private NamedParameterJdbcTemplate template;
 
   private DAO()
   {
@@ -24,11 +23,6 @@ public class DAO extends DAOConnection implements DAOinterface
     {
       throwables.printStackTrace();
     }
-  }
-
-  public DAO(NamedParameterJdbcTemplate template)
-  {
-    this.template = template;
   }
 
   public static DAO getDAO()
@@ -50,7 +44,7 @@ public class DAO extends DAOConnection implements DAOinterface
     try (Connection connection = getConnection())
     {
       PreparedStatement s = connection.prepareStatement(
-          "SELECT username FROM 'user' WHERE username = " + username);
+          "SELECT username FROM 'users' WHERE username = " + username);
       ResultSet r = s.executeQuery();
       r.next();
       user = new User(r.getString("username"));
@@ -79,11 +73,11 @@ public class DAO extends DAOConnection implements DAOinterface
 
   @Override public List<User> getAllUsers()
   {
-    List<User> users = null;
+    List<User> users = new ArrayList<>();
     try (Connection connection = getConnection())
     {
       PreparedStatement s = connection.prepareStatement(
-          "SELECT * FROM 'user'");
+          "SELECT * FROM users");
       ResultSet r = s.executeQuery();
       r.next();
       users.add(new User(r.getString("username")));
@@ -92,6 +86,6 @@ public class DAO extends DAOConnection implements DAOinterface
     {
       e.printStackTrace();
     }
-    return template.query("SELECT * FROM 'user'", new UserRowMapper());
+    return users;
   }
 }

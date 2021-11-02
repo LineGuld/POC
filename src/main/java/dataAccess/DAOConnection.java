@@ -7,16 +7,17 @@ import java.sql.SQLException;
 
 public class DAOConnection
 {
-  private String user = "postgres";
-  private String password = "Software20";
+  private String user = "zzqqvurd";
+  private String password = "3vyx5SAAyGzRHyxOUps8WUb0f2Rn0jml";
 
   protected Connection getConnection()
   {
     Connection result = null;
     try
     {
+      //Class.forName("org.postgresql.Driver");
       result = DriverManager.getConnection(
-          "jdbc:postgresql://localhost:5432/postgres?currentSchema=poc",
+          "jdbc:postgresql://balarama.db.elephantsql.com:5432/zzqqvurd",
           user, password);
     }
     catch (SQLException throwables)

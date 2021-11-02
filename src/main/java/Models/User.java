@@ -1,6 +1,6 @@
 package Models;
 
-@Entity public class User
+public class User
 {
   private String username;
   private int userId;
