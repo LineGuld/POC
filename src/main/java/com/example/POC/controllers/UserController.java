@@ -30,6 +30,13 @@ public class UserController
     userService.setUser(newUser);
   }
 
+  @PostMapping(value = "/userString") void setUserString(@RequestBody String username)
+  {
+    System.out.println("KRITISK " + username);
+    User newUser = new User(username);
+    userService.setUser(newUser);
+  }
+
   /*
   Fancy link type getter
   @GetMapping("/users")

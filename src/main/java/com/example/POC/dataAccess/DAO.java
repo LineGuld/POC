@@ -22,16 +22,16 @@ public class DAO implements DAOinterface
 
   @Override public User getUserByUsername(String username)
   {
-    return (User) template.query("select " + username +  " from users ", new UserRowMapper());
+    return (User) template.query("select " + username +  " from poc.users ", new UserRowMapper());
   }
 
   @Override public User setUser(User user)
   {
-    final String sql = "insert into users (username) values (:username)";
+    final String sql = "insert into poc.users values (:username)";
 
     KeyHolder holder = new GeneratedKeyHolder();
     SqlParameterSource param = new MapSqlParameterSource()
-        .addValue("userId", user.getUsername());
+        .addValue("username", user.getUsername());
     template.update(sql,param, holder);
 
     return user;
