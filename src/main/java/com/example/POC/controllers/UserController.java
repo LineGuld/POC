@@ -1,37 +1,33 @@
-package controllers;
+package com.example.POC.controllers;
 
-import Models.User;
-import dataAccess.DAO;
-import dataAccess.DAOinterface;
+import com.example.POC.Models.User;
 import org.springframework.web.bind.annotation.*;
+import com.example.POC.service.UserService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
-@RestController public class UserController
+
+@RestController
+//@RequestMapping("/users")
+public class UserController
 {
-  private DAOinterface daoInterface;
+  @Resource UserService userService;
 
-  public UserController()
+  @GetMapping(value = "/users") List<User> getAllUsers()
   {
-    daoInterface = DAO.getDAO();
+    return userService.getAllUsers();
   }
 
-  @GetMapping("/users")
-  List<User> getAllUsers()
+  @GetMapping(value = "/users/{username}") User getUserByUsername(
+      @PathVariable String username)
   {
-    return daoInterface.getAllUsers();
+    return userService.getUserByUsername(username);
   }
 
-  @GetMapping("/users/{username}")
-  User getUserByUsername(@PathVariable String username)
+  @PostMapping(value = "/user") void setUser(@RequestBody User newUser)
   {
-    return daoInterface.getUserByUsername(username);
-  }
-
-  @PostMapping("/users")
-  User setUser(@RequestBody User newUser)
-  {
-    return daoInterface.setUser(newUser);
+    userService.setUser(newUser);
   }
 
   /*

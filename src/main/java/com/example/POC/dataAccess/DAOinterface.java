@@ -1,6 +1,6 @@
-package dataAccess;
+package com.example.POC.dataAccess;
 
-import Models.User;
+import com.example.POC.Models.User;
 
 import java.util.List;
 

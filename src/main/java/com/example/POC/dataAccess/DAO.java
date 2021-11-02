@@ -1,17 +1,50 @@
-package dataAccess;
+package com.example.POC.dataAccess;
 
-import Models.User;
+import com.example.POC.Models.User;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
 import java.util.List;
 
 @Repository
-public class DAO extends DAOConnection implements DAOinterface
+public class DAO implements DAOinterface
 {
+  NamedParameterJdbcTemplate template;
 
-  private static DAO dao;
+  public DAO(NamedParameterJdbcTemplate template)
+  {
+    this.template = template;
+  }
+
+  @Override public User getUserByUsername(String username)
+  {
+    return (User) template.query("select " + username +  " from users ", new UserRowMapper());
+  }
+
+  @Override public User setUser(User user)
+  {
+    final String sql = "insert into users (username) values (:username)";
+
+    KeyHolder holder = new GeneratedKeyHolder();
+    SqlParameterSource param = new MapSqlParameterSource()
+        .addValue("userId", user.getUsername());
+    template.update(sql,param, holder);
+
+    return user;
+  }
+
+  @Override public List<User> getAllUsers()
+  {
+    return template.query("SELECT * FROM poc.users", new UserRowMapper());
+  }
+
+
+
+  /*
   private NamedParameterJdbcTemplate template;
 
   private DAO()
@@ -93,5 +126,5 @@ public class DAO extends DAOConnection implements DAOinterface
       e.printStackTrace();
     }
     return template.query("SELECT * FROM 'user'", new UserRowMapper());
-  }
+  }*/
 }
