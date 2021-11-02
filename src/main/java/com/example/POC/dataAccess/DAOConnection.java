@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DAOConnection
 {
   private String user = "postgres";
-  private String password = "Software20";
+  private String password = "290892";
 
   protected Connection getConnection()
   {

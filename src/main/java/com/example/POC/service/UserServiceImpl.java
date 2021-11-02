@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService
 
   @Override public void setUser(User user)
   {
-    System.out.println("Fuck");
-      daOinterface.setUser(user);
+    daOinterface.setUser(user);
   }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 
 @RestController
-//@RequestMapping("/users")
 public class UserController
 {
   @Resource UserService userService;
@@ -32,7 +31,6 @@ public class UserController
 
   @PostMapping(value = "/userString") void setUserString(@RequestBody String username)
   {
-    System.out.println("KRITISK " + username);
     User newUser = new User(username);
     userService.setUser(newUser);
   }
